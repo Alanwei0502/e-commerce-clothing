@@ -1,5 +1,5 @@
 import React from "react";
-import { auth } from "../../firebase/firebase.utils";
+import { auth } from "../../config/firebase.utils";
 import { Link } from "react-router-dom";
 import { ReactComponent as Logo } from "../../assets/crown.svg";
 import "./Header.styles.scss";
@@ -30,6 +30,7 @@ const Header = ({ currentUser }) => {
             SIGN IN
           </Link>
         )}
+        {currentUser ? <div>{currentUser.displayName}</div> : ""}
       </div>
     </div>
   );

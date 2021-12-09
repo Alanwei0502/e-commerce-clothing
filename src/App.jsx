@@ -1,27 +1,36 @@
 import { useState, useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
-import { auth } from "./firebase/firebase.utils";
+import { auth } from "./config/firebase.utils";
+import { onSnapshot } from "@firebase/firestore";
 
 import Header from "./components/header/Header";
 import HomePage from "./pages/home/HomePage";
 import ShopPage from "./pages/shop/ShopPage";
 import SignInAndSignUpPage from "./pages/sign-in-and-sign-up/SignInAndSignUpPage";
-
+import { createUserProfileDocument } from "./config/firebase.utils";
 import "./App.styles.scss";
 
 function App() {
   const [currentUser, setCurrentUser] = useState(null);
 
   useEffect(() => {
-    console.log(currentUser);
-
     let unsubscribeFromAuth = null;
-    unsubscribeFromAuth = auth.onAuthStateChanged((user) => {
-      setCurrentUser(user);
+    unsubscribeFromAuth = auth.onAuthStateChanged((userAuth) => {
+      if (userAuth) {
+        createUserProfileDocument(userAuth).then((userRef) => {
+          onSnapshot(userRef, (snapshot) => {
+            setCurrentUser({
+              id: snapshot.id,
+              ...snapshot.data(),
+            });
+          });
+        });
+      } else {
+        setCurrentUser(null);
+      }
     });
-
-    return () => unsubscribeFromAuth();
-  }, [currentUser]);
+    return unsubscribeFromAuth;
+  }, []);
 
   return (
     <div className="app">

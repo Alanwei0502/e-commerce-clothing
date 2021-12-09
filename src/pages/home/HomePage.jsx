@@ -2,10 +2,10 @@ import React from "react";
 import Directory from "../../components/directory/Directory";
 import "./HomePage.styles.scss";
 
-const HomePage = () => {
+const HomePage = ({ currentUser }) => {
   return (
     <div className="HomePage">
-      <Directory />
+      <Directory currentUser={currentUser} />
     </div>
   );
 };
