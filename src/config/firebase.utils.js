@@ -70,9 +70,11 @@ const db = getFirestore(firebaseApp);
 // [Authentication]
 export const auth = getAuth(firebaseApp);
 
-export const signInByEmailAndPassword = (email, password) => {
-  signInWithEmailAndPassword(auth, email, password).then((userCredential) => {
-    console.log('[userCredential.user]', userCredential.user);
+export const signInByEmailAndPassword = (email, password, navigate, setEmail, setPassword) => {
+  signInWithEmailAndPassword(auth, email, password).then(() => {
+    setEmail("");
+    setPassword("");
+    navigate('/');
   }).catch((error) => {
     console.log(error.message);
   })
@@ -83,13 +85,13 @@ const provider = new GoogleAuthProvider();
 provider.setCustomParameters({ prompt: 'select_account' });
 
 // [Methods]
-export const signInWithGoogle = () => {
+export const signInWithGoogle = (navigate) => {
   signInWithPopup(auth, provider)
-    .then((result) => {
-      const user = result.user;
-      return user;
+    .then(() => {
+      navigate('/');
     })
     .catch((error) => {
+      console.log(error.message);
     });
 }
 

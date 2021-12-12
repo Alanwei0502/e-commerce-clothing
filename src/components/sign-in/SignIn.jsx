@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import FormInput from "../form-input/FormInput";
 import CustomButton from "../custom-button/CustomButton";
 import {
@@ -10,12 +11,16 @@ import "./SignIn.styles.scss";
 const SignIn = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    signInByEmailAndPassword(email, password, navigate, setEmail, setPassword);
+  };
 
-    setEmail("");
-    setPassword("");
+  const handleGoogleSubmit = (e) => {
+    e.preventDefault();
+    signInWithGoogle(navigate);
   };
 
   const handleChangePassword = (e) => {
@@ -49,13 +54,12 @@ const SignIn = () => {
           handleChange={handleChangePassword}
         />
         <div className="buttons">
+          <CustomButton type="submit">Sign In</CustomButton>
           <CustomButton
-            type="submit"
-            onClick={() => signInByEmailAndPassword(email, password)}
+            type="button"
+            onClick={handleGoogleSubmit}
+            isGoogleSignIn
           >
-            Sign In
-          </CustomButton>
-          <CustomButton type="button" onClick={signInWithGoogle} isGoogleSignIn>
             Sign In With Google
           </CustomButton>
         </div>

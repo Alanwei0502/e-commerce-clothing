@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
 import { auth } from "./config/firebase.utils";
 import { onSnapshot } from "@firebase/firestore";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setCurrentUser } from "./redux/user/user.actions";
 
 import Header from "./components/header/Header";
@@ -14,6 +14,8 @@ import "./App.styles.scss";
 
 function App() {
   const dispatch = useDispatch();
+  const currentUser = useSelector((state) => state.user.currentUser);
+  console.log({ currentUser });
 
   useEffect(() => {
     let unsubscribeFromAuth = null;
