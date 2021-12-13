@@ -9,6 +9,7 @@ import Header from "./components/header/Header";
 import HomePage from "./pages/home/HomePage";
 import ShopPage from "./pages/shop/ShopPage";
 import SignInAndSignUpPage from "./pages/sign-in-and-sign-up/SignInAndSignUpPage";
+import CheckoutPage from "./pages/checkout/CheckoutPage";
 import { createUserProfileDocument } from "./config/firebase.utils";
 import "./App.styles.scss";
 
@@ -45,6 +46,7 @@ function App() {
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/shop" element={<ShopPage />} />
+        <Route path="/checkout" element={<CheckoutPage />} />
         <Route path="/signin" element={<SignInAndSignUpPage />} />
       </Routes>
     </div>

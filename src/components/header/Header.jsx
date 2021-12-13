@@ -3,13 +3,15 @@ import { useSelector } from "react-redux";
 import { auth } from "../../config/firebase.utils";
 import { Link } from "react-router-dom";
 import { ReactComponent as Logo } from "../../assets/crown.svg";
+import { selectCurrentUser } from "../../redux/user/user.selectors";
+import { selectCartHidden } from "../../redux/cart/cart.selectors";
 import CartIcon from "../cart-icon/CartIcon";
 import CartDropdown from "../cart-dropdown/CartDropdown";
 import "./Header.styles.scss";
 
 const Header = () => {
-  const isHidden = useSelector((state) => state.cart.hidden);
-  const currentUser = useSelector((state) => state.user.currentUser);
+  const isHidden = useSelector(selectCartHidden);
+  const currentUser = useSelector(selectCurrentUser);
   const handleSignOut = () => {
     auth.signOut();
   };
